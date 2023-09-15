@@ -48,12 +48,16 @@ def save_result_csv(
     delimiter=",",
     encoding="UTF-8",
 ):
-    with open(output, "w", newline="", encoding=encoding) as csvfile:
-        writer = csv.writer(csvfile, delimiter=delimiter)
-        writer.writerow(input_header)
-        for key in keys:
-            writer.writerow(input_data[key])
-    logger.info(f"save_result_csv to {output}")
+    try:
+        with open(output, "w", newline="", encoding=encoding) as csvfile:
+            writer = csv.writer(csvfile, delimiter=delimiter)
+            writer.writerow(input_header)
+            for key in keys:
+                writer.writerow(input_data[key])
+    except OSError as e:
+        logger.error(f"Output data is not saved to a file: '{output}', error: {e}")
+    else:
+        logger.info(f"Output data is saved to a file: '{output}'")
 
 
 def csv_operation(
@@ -66,6 +70,10 @@ def csv_operation(
     input1_header, input1_data = get_csv_data(input1, key_index=idx1)
     input2_header, input2_data = get_csv_data(input2, key_index=idx2)
 
+    if not input1_data or not input2_data:
+        logger.error("Initial data are missing. Exit.")
+        return
+
     # print(input1_header, input1_data)
     # print(input2_header, input2_data)
 
@@ -77,7 +85,10 @@ def csv_operation(
     output_records = len(intersection_21)
     report_txt = f"{input1_records=}, {input2_records=}, {output_records=}"
     logger.info(report_txt)
-    save_result_csv(input1_header, input1_data, intersection_21, output)
+    if intersection_21:
+        save_result_csv(input1_header, input1_data, intersection_21, output)
+    else:
+        logger.error("No output data. Nothing to save.")
 
 
 def main():

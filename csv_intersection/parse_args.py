@@ -35,7 +35,7 @@ def get_version_pe():
 def get_version():
     try:
         version_str = version(__package__)
-        print(f"{version_str=}")
+        # print(f"{version_str=}")
     except Exception:
         version_str = get_version_pe()
         if version_str is None:
