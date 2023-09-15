@@ -45,8 +45,7 @@ def get_version():
 
 
 def app_arg():
-    library_ver = "OpenCV lib" if OPENCV else "Pillow lib"
-    ap = argparse.ArgumentParser(epilog=library_ver)
+    ap = argparse.ArgumentParser()
     ap.add_argument(
         "-V",
         "--version",

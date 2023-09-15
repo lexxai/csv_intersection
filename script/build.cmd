@@ -1,9 +1,10 @@
 python build-version.py
 
 mkdir "../pyinstall"
-rem ERASE "../pyinstall" /S/Q
+ERASE "../pyinstall" /S/Q
 PUSHD "../pyinstall"
 
-pyinstaller "../copy_three_dirs/main.py" --clean --name copy_three_dirs --hidden-import=PIL --onefile --version-file "../versionfile.txt"
+SET NAME=csv_master
+pyinstaller "../%NAME%/main.py" --clean --name %NAME%  --onefile --version-file "../versionfile.txt"
 POPD
-python build-version.py ../pyinstall/dist/copy_three_dirs.exe
+python build-version.py ../pyinstall/dist/%NAME%.exe
