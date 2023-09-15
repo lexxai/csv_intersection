@@ -1,11 +1,9 @@
 import logging
-from pathlib import Path
 import csv
-from datetime import datetime
 from pathlib import Path
 
 try:
-    from csv_master.parse_args import app_arg
+    from csv_intersection.parse_args import app_arg
 except ImportError:
     from parse_args import app_arg
 
@@ -22,13 +20,13 @@ def csv_compare(input1_data: dict, input2_data: dict) -> list[str]:
 
 
 def get_csv_data(
-    input_file: Path, key_index: int = 0
+    input_file: Path, key_index: int = 0, delimiter=",", encoding="UTF-8"
 ) -> tuple[list[str], dict[str, list[str]]]:
     input_data: dict[str, list[str]] = {}
     input_header: list[str] = []
     if input_file.is_file():
-        with open(input_file, newline="") as csvfile:
-            reader = csv.reader(csvfile)
+        with open(input_file, newline="", encoding=encoding) as csvfile:
+            reader = csv.reader(csvfile, delimiter=delimiter)
             input_header = next(reader)
             key: str = ""
             try:
@@ -43,10 +41,15 @@ def get_csv_data(
 
 
 def save_result_csv(
-    input_header: list[str], input_data: dict, keys: list[str], output: Path
+    input_header: list[str],
+    input_data: dict,
+    keys: list[str],
+    output: Path,
+    delimiter=",",
+    encoding="UTF-8",
 ):
-    with open(output, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
+    with open(output, "w", newline="", encoding=encoding) as csvfile:
+        writer = csv.writer(csvfile, delimiter=delimiter)
         writer.writerow(input_header)
         for key in keys:
             writer.writerow(input_data[key])
@@ -65,7 +68,13 @@ def csv_operation(input1: Path, input2: Path, output: Path):
     # print(input2_header, input2_data)
 
     intersection_21 = csv_compare(input1_data, input2_data)
-    print(intersection_21)
+    # print(intersection_21)
+
+    input1_records = len(input1_data.keys())
+    input2_records = len(input2_data.keys())
+    output_records = len(intersection_21)
+    report_txt = f"{input1_records=}, {input2_records=}, {output_records=}"
+    logger.info(report_txt)
 
     save_result_csv(input1_header, input1_data, intersection_21, output)
 

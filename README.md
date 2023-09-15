@@ -1,4 +1,9 @@
-#  csv mater
+#   csv intersection
+Intersection of two csv files by a key column. 
+
+Where column is a string with the file name. 
+
+Result saved to new csv file. 
 
 ### help
 

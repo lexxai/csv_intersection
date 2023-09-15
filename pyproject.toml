@@ -1,18 +1,18 @@
 [tool.poetry]
-name = "csv-master"
-version = "0.1.0"
-description = ""
+name = "csv_intersection"
+version = "0.1.2"
+description = "Intersection of two csv files by a key column."
 authors = ["lexxai <lexxai@users.noreply.github.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+three-dirs = "csv_intersection.main:main"
+
 [tool.poetry.dependencies]
 python = "^3.11"
-progressbar2 = "^4.2.0"
-rich = "^13.5.2"
-imutils = "^0.5.4"
-pefile = "^2023.2.7"
 importlib-metadata = { version = "^1.0.0", python = "<3.8" }
-tqdm = "^4.66.1"
+pefile = "^2023.2.7"
+
 
 [tool.poetry.group.dev.dependencies]
 pyinstaller-versionfile = "^2.1.1"

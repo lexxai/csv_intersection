@@ -1,3 +1,5 @@
 /tests/
 /poetry.lock
 /pyinstall/
+/dist/
+/versionfile.txt
