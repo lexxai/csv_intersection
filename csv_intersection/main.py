@@ -56,13 +56,15 @@ def save_result_csv(
     logger.info(f"save_result_csv to {output}")
 
 
-def csv_operation(input1: Path, input2: Path, output: Path):
+def csv_operation(
+    input1: Path, input2: Path, output: Path, idx1: int = 0, idx2: int = 1
+):
     input1_header: list[str]
     input1_data: dict[str, list[str]]
     input2_header: list[str]
     input2_data: dict[str, list[str]]
-    input1_header, input1_data = get_csv_data(input1, key_index=0)
-    input2_header, input2_data = get_csv_data(input2, key_index=1)
+    input1_header, input1_data = get_csv_data(input1, key_index=idx1)
+    input2_header, input2_data = get_csv_data(input2, key_index=idx2)
 
     # print(input1_header, input1_data)
     # print(input2_header, input2_data)
@@ -75,7 +77,6 @@ def csv_operation(input1: Path, input2: Path, output: Path):
     output_records = len(intersection_21)
     report_txt = f"{input1_records=}, {input2_records=}, {output_records=}"
     logger.info(report_txt)
-
     save_result_csv(input1_header, input1_data, intersection_21, output)
 
 
@@ -97,8 +98,10 @@ def main():
         input2_path = work_path.joinpath(input2_path)
     if not output_path.is_absolute():
         output_path = work_path.joinpath(output_path)
+    input1_key_idx = args.get("input1_key_idx")
+    input2_key_idx = args.get("input2_key_idx")
 
-    csv_operation(input1_path, input2_path, output_path)
+    csv_operation(input1_path, input2_path, output_path, input1_key_idx, input2_key_idx)
 
 
 if __name__ == "__main__":

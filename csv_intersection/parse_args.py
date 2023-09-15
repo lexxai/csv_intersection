@@ -72,6 +72,18 @@ def app_arg():
         type=Path,
     )
     ap.add_argument(
+        "--input1_key_idx",
+        help="Key index for input1, default 0",
+        default=0,
+        type=int,
+    )
+    ap.add_argument(
+        "--input2_key_idx",
+        help="Key index for input2, default 1",
+        default=1,
+        type=int,
+    )
+    ap.add_argument(
         "--verbose",
         help="verbose output",
         action="store_true",

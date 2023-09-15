@@ -6,7 +6,7 @@ authors = ["lexxai <lexxai@users.noreply.github.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
-three-dirs = "csv_intersection.main:main"
+csv_intersection = "csv_intersection.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
